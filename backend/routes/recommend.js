@@ -57,6 +57,33 @@ router.post('/', async (req, res) => {
             }
         }
 
+        // --- AI API Image Generation ---
+        const promptParts = [
+            'fashion photography of outfit',
+            weatherCategory,
+            style ? style : 'casual',
+            occasion ? occasion : 'everyday',
+            color ? color : '',
+            gender && gender !== 'unisex' ? gender : ''
+        ].filter(Boolean);
+
+        const prompt = promptParts.join(' ');
+        const encodedPrompt = encodeURIComponent(prompt);
+
+        const aiGeneratedOutfit = {
+            _id: "ai-" + Date.now(), 
+            title: "✨ AI Custom Generated Outfit",
+            description: `A completely unique outfit generated dynamically just for your preferences using AI image generation. Prompt: ${prompt}`,
+            imageUrl: `https://image.pollinations.ai/prompt/${encodedPrompt}`,
+            style: style ? [style] : ['Custom'],
+            occasion: occasion ? [occasion] : ['Any'],
+            weatherOptions: [weatherCategory]
+        };
+        if (color) aiGeneratedOutfit.color = color;
+
+        outfits.push(aiGeneratedOutfit);
+        // -------------------------------
+
         res.json({ weatherCategory, outfits });
     } catch (err) {
         res.status(500).json({ error: err.message });
