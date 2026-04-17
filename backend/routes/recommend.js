@@ -74,7 +74,7 @@ router.post('/', async (req, res) => {
             _id: "ai-" + Date.now(), 
             title: "✨ AI Custom Generated Outfit",
             description: `A completely unique outfit generated dynamically just for your preferences using AI image generation. Prompt: ${prompt}`,
-            imageUrl: `https://image.pollinations.ai/prompt/${encodedPrompt}`,
+            imageUrl: `https://pollinations.ai/prompt/${encodedPrompt}`,
             style: style ? [style] : ['Custom'],
             occasion: occasion ? [occasion] : ['Any'],
             weatherOptions: [weatherCategory]
